@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="jumbotron text-center">
+      <h1>Latest Disaster Tweetes</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Tweets</a></p>
+      <p><a class="btn btn-primary btn-lg" href="/prediction" role="button">Check New Tweets</a></p>
+    </div>
+
+    <!-- Mars News -->
+    <div class="row" id="mars-news">
+      <div class="col-md-12">
+        <div class="media">
+        <div class="media-body">
+          <h2>#fire</h2>
+            <p>{{mars_app.fire_tweets}}</p>
+        </div>
+        <div class="media-body">
+          <h2>prediction</h2>
+            <p>{{mars_app.prediction1}}</p>
+        </div>
+        </div>
+        </div>
+        <div class="col-md-12">
+          <div class="media">
+          <div class="media-body">
+            <h2>#floods</h2>
+              <p>{{mars_app.flood_tweets}}</p>
+          </div>
+          <div class="media-body">
+            <h2>prediction</h2>
+              <p>{{mars_app.prediction2}}</p>
+          </div>
+          </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="media">
+          <div class="media-body">
+            <h2>#storm</h2>
+              <p>{{mars_app.storm_tweets}}</p>
+          </div>
+          <div class="media-body">
+            <h2>prediction</h2>
+              <p>{{mars_app.prediction3}}</p>
+          </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="media">
+          <div class="media-body">
+            <h2>#disaster</h2>
+              <p>{{mars_app.disaster_tweets}}</p>
+          </div>
+          <div class="media-body">
+            <h2>prediction</h2>
+              <p>{{mars_app.prediction4}}</p>
+          </div>
+          </div>
+          </div>
+          <div class="col-md-12">
+            <div class="media">
+          <div class="media-body">
+            <h2>#thunder</h2>
+              <p>{{mars_app.thunder_tweets}}</p>
+          </div>
+          <div class="media-body">
+            <h2>prediction</h2>
+              <p>{{mars_app.prediction5}}</p>
+          </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="media">
+          <div class="media-body">
+                <h2>#earthquake</h2>
+              <p>{{mars_app.earthquake_tweets}}</p>
+          </div>
+          <div class="media-body">
+            <h2>prediction</h2>
+              <p>{{mars_app.prediction6}}</p>
+          </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+      
+
+   
+</body>
+
+</html>
