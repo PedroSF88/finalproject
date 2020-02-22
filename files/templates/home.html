@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DISASTER TWEET OR NOT?</title>
+  <link rel="icon" type="image" href="resources/assets/images/disaster.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!--CSS Link-->
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    
+</head>
+
+<body>
+  <!-- Navigation Section -->
+  <div class="navigation">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" style="background-color: rgb(0, 0, 0);" href="home.html">REAL OR NOT? NLP WITH DISASTER TWEETS</a>     
+      
+      <button class="navbar-toggler  border border-white" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+         
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Scrape Tweet</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="data.html">Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href= "exploratory.html">Exploratory Data Analysis</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href= "code.html">Model & Code</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contributors.html">Contributors</a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- Content Section -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-18">
+        <!-- Left box  -->
+        <div class="box">
+          <h3 class="title">Project Summary</h3>
+          <hr>
+          <img src="../static/images/main.jpg" class="vizualization rounded float-left" alt="Disasters" width = "155" height = "104">
+
+          <p>Twitter in the modern age has become a platform for information; everything from politics to world events to individual lives is posted here for everyone to see. 
+            People love reflecting their reactions and emotions to social media platforms. 
+          One issue that arises from this is the ability to parse through and understand what does and what doesn’t belong in certain categories. 
+          </br>
+          </br>The purpose of this project is to determine how to categorize these tweets, in this case determining whether a tweet is related to a real disaster or not. 
+          </br>
+          </br>In this project, we used <a href="https://www.kaggle.com/c/nlp-getting-started/data" target=”_blank”>Kaggle’s “Real or Not? NLP with Disaster Tweets”</a> data for our machine learning model. Explore the links provided at the top of the page to discover more about our analysis and the model.
+          </p> 
+            
+            <!-- In this project,
+
+             is analyzed for the years between 2008 and 2016. The project is consisted of 3 web pages that includes 3 visualizations. 
+          </br>
+          </br>The graph on the "player" page shows average salary of a player over the years with an additional info below the chart with player information and statistics. The visualization in the "salary" page shows the average salary per player in MLB teams for the selected year. The graph allows users to filter the data by year. The third graph at "wins" page shows wins and runs for a team per year. -->
+            
+
+        </div>
+      </div>
+      <!-- <div class="col-lg-12 col-md-18">
+         Right Box 
+        <div class="box">
+          <h5 class="title">Visualizations</h5>
+          <hr>
+
+
+          <div class="container">
+            <div class="row" style="padding-bottom: 30px;">
+              <div class="col-6">
+                <a href="max_temperature.html">
+                  <img class="panel" src="Resources/assets/images/Fig1.png" alt="Max Temperature Image">
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="humidity.html">
+                  <img class="panel" src="Resources/assets/images/Fig2.png" alt="Humidity Graph">
+                </a>
+              </div>
+            </div>
+
+            <div class="row" style="padding-bottom: 30px;">
+              <div class="col-6">
+                <a href="cloudiness.html">
+                  <img class="panel" src="Resources/assets/images/Fig3.png" alt="Cloudiness Graph">
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="wind_speed.html">
+                  <img class="panel" src="Resources/assets/images/Fig4.png" alt="Wind Speed Graph">
+                </a>
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/data.js') }}"></script>
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer"> Made with <span style="color: #e25555;">&#9829;</span> by Pedro, Shawn, Ahmed</div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DISASTER TWEET OR NOT?</title>
+  <link rel="icon" type="image" href="resources/assets/images/disaster.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!--CSS Link-->
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/jupyter.css">
+    
+</head>
+
+<body>
+  <!-- Navigation Section -->
+  <div class="navigation">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" style="background-color: rgb(0, 0, 0);" href="home.html">REAL OR NOT? NLP WITH DISASTER TWEETS</a>     
+      
+      <button class="navbar-toggler  border border-white" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Scrape Tweet</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="data.html">Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href= "exploratory.html">Exploratory Data Analysis</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href= "code.html">Model & Code</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contributors.html">Contributors</a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- Content Section -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-18">
+        <!-- Left box  -->
+        <div class="box">
+          <h3 class="title">Our Model & Code</h3>
+          <hr>
+          <p>
+            You can reach the the full analysis of the project in this link.
+          </br>
+          </br>You can find all the files belong to the project at <a href="https://github.com/PedroSF88/finalproject" target=”_blank”>our GitHub repository</a>.
+          </br>  
+          </br>Please see the code below that is used for building our machine learning model. 
+          <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+            <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+            <span class="kn">import</span> <span class="nn">nltk</span>
+            <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="k">import</span> <span class="n">stopwords</span>
+            <span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="k">import</span> <span class="n">word_tokenize</span>
+            <span class="kn">from</span> <span class="nn">nltk.stem.porter</span> <span class="k">import</span> <span class="n">PorterStemmer</span>
+            <span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;stopwords&quot;</span><span class="p">)</span>
+            <span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
+            <span class="kn">import</span> <span class="nn">string</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>[nltk_data] Downloading package stopwords to /root/nltk_data...
+            [nltk_data]   Package stopwords is already up-to-date!
+            [nltk_data] Downloading package punkt to /root/nltk_data...
+            [nltk_data]   Package punkt is already up-to-date!
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/PedroSF88/finalproject/master/train.csv&quot;</span><span class="p">)</span>
+            <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/PedroSF88/finalproject/master/test.csv&quot;</span><span class="p">)</span>
+            <span class="n">df1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>id</th>
+                  <th>keyword</th>
+                  <th>location</th>
+                  <th>text</th>
+                  <th>target</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>1</td>
+                  <td>NaN</td>
+                  <td>NaN</td>
+                  <td>Our Deeds are the Reason of this #earthquake M...</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>4</td>
+                  <td>NaN</td>
+                  <td>NaN</td>
+                  <td>Forest fire near La Ronge Sask. Canada</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>5</td>
+                  <td>NaN</td>
+                  <td>NaN</td>
+                  <td>All residents asked to 'shelter in place' are ...</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>6</td>
+                  <td>NaN</td>
+                  <td>NaN</td>
+                  <td>13,000 people receive #wildfires evacuation or...</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>7</td>
+                  <td>NaN</td>
+                  <td>NaN</td>
+                  <td>Just got sent this photo from Ruby #Alaska as ...</td>
+                  <td>1</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;keyword&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">filter</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;keyword&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>id</th>
+                  <th>keyword</th>
+                  <th>text</th>
+                  <th>target</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>1</td>
+                  <td>NaN</td>
+                  <td>Our Deeds are the Reason of this #earthquake M...</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>4</td>
+                  <td>NaN</td>
+                  <td>Forest fire near La Ronge Sask. Canada</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>5</td>
+                  <td>NaN</td>
+                  <td>All residents asked to 'shelter in place' are ...</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>6</td>
+                  <td>NaN</td>
+                  <td>13,000 people receive #wildfires evacuation or...</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>7</td>
+                  <td>NaN</td>
+                  <td>Just got sent this photo from Ruby #Alaska as ...</td>
+                  <td>1</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>id</th>
+                  <th>keyword</th>
+                  <th>text</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>0</td>
+                  <td>NaN</td>
+                  <td>Just happened a terrible car crash</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>2</td>
+                  <td>NaN</td>
+                  <td>Heard about #earthquake is different cities, s...</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>3</td>
+                  <td>NaN</td>
+                  <td>there is a forest fire at spot pond, geese are...</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>9</td>
+                  <td>NaN</td>
+                  <td>Apocalypse lighting. #Spokane #wildfires</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>11</td>
+                  <td>NaN</td>
+                  <td>Typhoon Soudelor kills 28 in China and Taiwan</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+            <span class="k">def</span> <span class="nf">find_hashtags</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;#\w+&quot;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">)])</span> <span class="ow">or</span> <span class="s1">&#39;no&#39;</span>
+            <span class="k">def</span> <span class="nf">find_mentions</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;@\w+&quot;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">)])</span> <span class="ow">or</span> <span class="s1">&#39;no&#39;</span>
+            <span class="k">def</span> <span class="nf">find_links</span><span class="p">(</span><span class="n">tweet</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)[:]</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;https?://\S+&quot;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">)])</span> <span class="ow">or</span> <span class="s1">&#39;no&#39;</span>
+            <span class="k">def</span> <span class="nf">tolkencleaner</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+              <span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+              <span class="n">punctuation</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span>
+              <span class="n">ps</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
+              <span class="n">df</span><span class="p">[</span><span class="s1">&#39;keyword&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;keyword&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+              <span class="n">tolkenized</span> <span class="o">=</span> <span class="p">[]</span>
+              <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                <span class="n">no_link</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;https?://\S+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="p">)</span>
+                <span class="n">no_break</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n&#39;</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">no_link</span><span class="p">)</span>
+                <span class="n">cleaner</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">no_break</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">cleaner</span><span class="p">)</span>
+                <span class="n">stripped</span> <span class="o">=</span> <span class="p">[</span><span class="n">ps</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">word_tokens</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">punctuation</span><span class="p">]</span>
+                <span class="n">split_sentence</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">stripped</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+                <span class="n">filtered_sentence</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">split_sentence</span><span class="p">]</span>
+                <span class="n">finished_sentence</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_sentence</span><span class="p">)</span>
+                <span class="n">tolkenized</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">finished_sentence</span><span class="p">)</span>
+              <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tolkenized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tolkenized</span>
+              <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">find_hashtags</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+              <span class="n">df</span><span class="p">[</span><span class="s1">&#39;mentions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">find_mentions</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+              <span class="n">df</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">find_links</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+              <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tolkencleaner</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>id</th>
+                  <th>keyword</th>
+                  <th>text</th>
+                  <th>target</th>
+                  <th>tolkenized</th>
+                  <th>hashtag</th>
+                  <th>mentions</th>
+                  <th>links</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>1</td>
+                  <td>nan</td>
+                  <td>Our Deeds are the Reason of this #earthquake M...</td>
+                  <td>1</td>
+                  <td>deed reason thi earthquak may allah forgiv us</td>
+                  <td>earthquake</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>4</td>
+                  <td>nan</td>
+                  <td>Forest fire near La Ronge Sask. Canada</td>
+                  <td>1</td>
+                  <td>forest fire near la rong sask canada</td>
+                  <td>no</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>5</td>
+                  <td>nan</td>
+                  <td>All residents asked to 'shelter in place' are ...</td>
+                  <td>1</td>
+                  <td>resid ask 'shelter place notifi offic no evacu...</td>
+                  <td>no</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>6</td>
+                  <td>nan</td>
+                  <td>13,000 people receive #wildfires evacuation or...</td>
+                  <td>1</td>
+                  <td>13,000 peopl receiv wildfir evacu order califo...</td>
+                  <td>wildfires</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>7</td>
+                  <td>nan</td>
+                  <td>Just got sent this photo from Ruby #Alaska as ...</td>
+                  <td>1</td>
+                  <td>got sent thi photo rubi alaska smoke wildfir p...</td>
+                  <td>Alaska wildfires</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">keyword</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">hashtag</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">mentions</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>222
+            1358
+            1795
+            3889
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tolkencleaner</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>id</th>
+                  <th>keyword</th>
+                  <th>text</th>
+                  <th>tolkenized</th>
+                  <th>hashtag</th>
+                  <th>mentions</th>
+                  <th>links</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>0</td>
+                  <td>nan</td>
+                  <td>Just happened a terrible car crash</td>
+                  <td>happen terribl car crash</td>
+                  <td>no</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>2</td>
+                  <td>nan</td>
+                  <td>Heard about #earthquake is different cities, s...</td>
+                  <td>heard earthquak differ citi stay safe everyon</td>
+                  <td>earthquake</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>3</td>
+                  <td>nan</td>
+                  <td>there is a forest fire at spot pond, geese are...</td>
+                  <td>forest fire spot pond gees flee across street ...</td>
+                  <td>no</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>9</td>
+                  <td>nan</td>
+                  <td>Apocalypse lighting. #Spokane #wildfires</td>
+                  <td>apocalyps light spokan wildfir</td>
+                  <td>Spokane wildfires</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>11</td>
+                  <td>nan</td>
+                  <td>Typhoon Soudelor kills 28 in China and Taiwan</td>
+                  <td>typhoon soudelor kill 28 china taiwan</td>
+                  <td>no</td>
+                  <td>no</td>
+                  <td>no</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># category_encoders</span>
+            
+            <span class="kn">import</span> <span class="nn">category_encoders</span> <span class="k">as</span> <span class="nn">ce</span>
+            <span class="n">encoder</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">TargetEncoder</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;keyword&#39;</span><span class="p">])</span>
+            <span class="n">encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;keyword&#39;</span><span class="p">],</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+            <span class="n">keyword</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;keyword&#39;</span><span class="p">]))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>(7613, 1)
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># CountVectorizer</span>
+            
+            <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">CountVectorizer</span>
+            <span class="n">cv_hashtag</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="n">cv_mentions</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="n">cv_link</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">analyzer</span> <span class="o">=</span> <span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="n">token_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;https?://\S+&#39;</span><span class="p">)</span>
+            <span class="n">ht</span> <span class="o">=</span> <span class="n">cv_hashtag</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">])</span>
+            <span class="n">mt</span> <span class="o">=</span> <span class="n">cv_mentions</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;mentions&#39;</span><span class="p">])</span>
+            <span class="n">lt</span> <span class="o">=</span> <span class="n">cv_link</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">])</span>
+            <span class="n">train_ht</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ht</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cv_hashtag</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+            <span class="n">train_mt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mt</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cv_mentions</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+            <span class="n">train_lt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">lt</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cv_link</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">train_ht</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">train_mt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">train_lt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>(7613, 107)
+            (7613, 18)
+            (7613, 6)
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TfidfVectorizer</span>
+            
+            <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">TfidfVectorizer</span>
+            
+            <span class="n">vec_text</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">min_df</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">ngram_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span> 
+            <span class="n">vt</span> <span class="o">=</span> <span class="n">vec_text</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s1">&#39;tolkenized&#39;</span><span class="p">])</span>
+            <span class="n">train_txt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vt</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">vec_text</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">train_txt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>(7613, 1657)
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># THE GREAT MERGE!!!!!!!</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_txt</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s1">&#39;_kwd&#39;</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_ht</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s1">&#39;_link&#39;</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_lt</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s1">&#39;_hashtags&#39;</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_mt</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s1">&#39;_mentions&#39;</span><span class="p">)</span>
+            <span class="c1"># X = X.join(train_txt, rsuffix=&#39;_text&#39;)</span>
+            <span class="c1"># X = X.join(train.target, rsuffix=&#39;_yyy&#39;)</span>
+            <span class="n">X</span><span class="o">.</span><span class="n">dropna</span>
+            <span class="n">X</span>
+            
+            <span class="c1"># from google.colab import files</span>
+            <span class="c1"># X.to_csv(&#39;data.csv&#39;)</span>
+            <span class="c1"># files.download(&#39;data.csv&#39;)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>00</th>
+                  <th>01</th>
+                  <th>04</th>
+                  <th>05</th>
+                  <th>06</th>
+                  <th>07</th>
+                  <th>08</th>
+                  <th>08 05</th>
+                  <th>08 06</th>
+                  <th>10</th>
+                  <th>100</th>
+                  <th>11</th>
+                  <th>11 year</th>
+                  <th>12</th>
+                  <th>12000</th>
+                  <th>12000 nigerian</th>
+                  <th>13</th>
+                  <th>130</th>
+                  <th>130 special</th>
+                  <th>14</th>
+                  <th>15</th>
+                  <th>15 saudi</th>
+                  <th>16</th>
+                  <th>16yr</th>
+                  <th>16yr old</th>
+                  <th>17</th>
+                  <th>18</th>
+                  <th>1980</th>
+                  <th>1st</th>
+                  <th>20</th>
+                  <th>2013</th>
+                  <th>2014</th>
+                  <th>2015</th>
+                  <th>2015 prebreak</th>
+                  <th>22</th>
+                  <th>24</th>
+                  <th>25</th>
+                  <th>29</th>
+                  <th>2nd</th>
+                  <th>30</th>
+                  <th>...</th>
+                  <th>terrorism</th>
+                  <th>trapmusic</th>
+                  <th>truth_link</th>
+                  <th>tubestrike</th>
+                  <th>uk_link</th>
+                  <th>us</th>
+                  <th>usa_link</th>
+                  <th>usgs</th>
+                  <th>wildfire</th>
+                  <th>wildfires</th>
+                  <th>wmata</th>
+                  <th>womens</th>
+                  <th>world_link</th>
+                  <th>worldnews</th>
+                  <th>wx</th>
+                  <th>yyc_link</th>
+                  <th>http://t.co/cybksxhf7d</th>
+                  <th>http://t.co/encmhz6y34</th>
+                  <th>http://t.co/ksawlyux02</th>
+                  <th>http://t.co/q2eblokeve</th>
+                  <th>http://t.co/qew4c5m1xd</th>
+                  <th>http://t.co/vvplfqv58p</th>
+                  <th>ap_mentions</th>
+                  <th>arianagrande</th>
+                  <th>change</th>
+                  <th>djicemoon</th>
+                  <th>emmerdale_mentions</th>
+                  <th>foxnews</th>
+                  <th>invalid</th>
+                  <th>justinbieber</th>
+                  <th>mikeparractor</th>
+                  <th>no_mentions</th>
+                  <th>potus</th>
+                  <th>stretcher_mentions</th>
+                  <th>towel</th>
+                  <th>usagov</th>
+                  <th>usatoday_mentions</th>
+                  <th>viralspell</th>
+                  <th>youngheroesid</th>
+                  <th>youtube</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.439399</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>...</th>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <th>7608</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>7609</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>7610</th>
+                  <td>0.0</td>
+                  <td>0.340912</td>
+                  <td>0.361801</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>7611</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>7612</th>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.000000</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>0.0</td>
+                  <td>...</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>7613 rows × 1789 columns</p>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;target_yyy&#39;</span><span class="p">})</span>
+            <span class="n">y</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt output_prompt">Out[0]:</div>
+            
+            
+            
+            <div class="output_html rendered_html output_subarea output_execute_result">
+            <div>
+            <style scoped>
+                .dataframe tbody tr th:only-of-type {
+                    vertical-align: middle;
+                }
+            
+                .dataframe tbody tr th {
+                    vertical-align: top;
+                }
+            
+                .dataframe thead th {
+                    text-align: right;
+                }
+            </style>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>target_yyy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>0</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>...</th>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <th>7608</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>7609</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>7610</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>7611</th>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <th>7612</th>
+                  <td>1</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>7613 rows × 1 columns</p>
+            </div>
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># from sklearn.feature_selection import SelectKBest</span>
+            <span class="c1"># from sklearn.feature_selection import chi2</span>
+            <span class="c1"># from sklearn.preprocessing import MinMaxScaler</span>
+            <span class="c1"># X_norm = MinMaxScaler().fit_transform(X)</span>
+            <span class="c1"># chi_selector = SelectKBest(chi2, k=1600)</span>
+            <span class="c1"># chi_selector.fit(X_norm, y)</span>
+            <span class="c1"># chi_support = chi_selector.get_support()</span>
+            <span class="c1"># chi_feature = X.loc[:,chi_support].columns.tolist()</span>
+            <span class="c1"># print(str(len(chi_feature)), &#39;selected features&#39;)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># preprocessing</span>
+            
+            <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+            <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.20</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">777</span><span class="p">)</span>
+            <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">StandardScaler</span>
+            <span class="n">sc</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+            <span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+            <span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>(6090, 1789) (6090, 1)
+            (1523, 1789) (1523, 1)
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+            <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="k">import</span> <span class="n">Pipeline</span>
+            <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">MinMaxScaler</span>
+            
+            <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+            
+            <span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">777</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span><span class="n">scaler</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="p">),])</span>
+            
+            <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+            <span class="n">y_test</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+            
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Training accuracy: </span><span class="si">%.4f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stderr output_text">
+            <pre>/usr/local/lib/python3.6/dist-packages/sklearn/utils/validation.py:760: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+              y = column_or_1d(y, warn=True)
+            </pre>
+            </div>
+            </div>
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>Training accuracy: 0.8626
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">loadtxt</span>
+            <span class="kn">from</span> <span class="nn">xgboost</span> <span class="k">import</span> <span class="n">XGBClassifier</span>
+            <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+            <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">()</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stderr output_text">
+            <pre>/usr/local/lib/python3.6/dist-packages/sklearn/preprocessing/_label.py:235: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+              y = column_or_1d(y, warn=True)
+            /usr/local/lib/python3.6/dist-packages/sklearn/preprocessing/_label.py:268: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+              y = column_or_1d(y, warn=True)
+            </pre>
+            </div>
+            </div>
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>XGBClassifier(base_score=0.5, booster=&#39;gbtree&#39;, colsample_bylevel=1,
+                          colsample_bynode=1, colsample_bytree=1, gamma=0,
+                          learning_rate=0.1, max_delta_step=0, max_depth=3,
+                          min_child_weight=1, missing=None, n_estimators=100, n_jobs=1,
+                          nthread=None, objective=&#39;binary:logistic&#39;, random_state=0,
+                          reg_alpha=0, reg_lambda=1, scale_pos_weight=1, seed=None,
+                          silent=None, subsample=1, verbosity=1)
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">y_pred</span><span class="p">]</span>
+            <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy: </span><span class="si">%.2f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">accuracy</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">))</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            <div class="output_wrapper">
+            <div class="output">
+            
+            
+            <div class="output_area">
+            
+                <div class="prompt"></div>
+            
+            
+            <div class="output_subarea output_stream output_stdout output_text">
+            <pre>Accuracy: 87.59%
+            </pre>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;finalized_model.sav&#39;</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            </div>
+            <div class="cell border-box-sizing code_cell rendered">
+            <div class="input">
+            <div class="prompt input_prompt">In&nbsp;[0]:</div>
+            <div class="inner_cell">
+                <div class="input_area">
+            <div class=" highlight hl-ipython3"><pre><span></span> 
+            </pre></div>
+            
+                </div>
+            </div>
+            </div>
+            
+            </div>
+
+
+
+          </p>
+          <!-- <img src="../static/images/main.jpg" class="vizualization rounded float-left" alt="Baseball" width = "155" height = "104">
+
+          <p>Source:<a href="http://www.seanlahman.com/baseball-archive/statistics/" target=”_blank”> "Sean Lahman's Baseball Database"</a> 
+          </br>The sqlite database containing complete batting and pitching statistics from 1871 to 2018, plus fielding statistics, standings, team stats, managerial records, post-season data, and more.
+ 
+        </br>  
+        </br>For this project, we narrowed our focus to the following:
+        </br>Player info – over 19,500 records – list of players with an MLB debut date from 1871 to 2018.
+        </br>Teams – approximately 2,900 records – detailed information about each MLB team’s performance, including number of wins and runs scored per season, from 1871 to 2018.
+             
+        </br>Salaries – approximately 26,500 records – individual player salary by year and team from 1985 to 2016
+
+        </br>Explore the links provided at the top of the page for these interactive MLB visualizations.
+
+        </br>The graph on the "player" page shows average salary of a player over the years with an additional info below the chart with player information and statistics. The visualization in the "salary" page shows the average salary per player in MLB teams for the selected year. The graph allows users to filter the data by year. The third graph at "wins" page shows wins and runs for a team per year. -->
+            
+            
+            <!-- In this project,
+
+             is analyzed for the years between 2008 and 2016. The project is consisted of 3 web pages that includes 3 visualizations. 
+          </br>
+          </br>The graph on the "player" page shows average salary of a player over the years with an additional info below the chart with player information and statistics. The visualization in the "salary" page shows the average salary per player in MLB teams for the selected year. The graph allows users to filter the data by year. The third graph at "wins" page shows wins and runs for a team per year. -->
+            
+      
+        </div>
+      </div>
+      <!-- <div class="col-lg-12 col-md-18">
+         Right Box 
+        <div class="box">
+          <h5 class="title">Visualizations</h5>
+          <hr>
+
+
+          <div class="container">
+            <div class="row" style="padding-bottom: 30px;">
+              <div class="col-6">
+                <a href="max_temperature.html">
+                  <img class="panel" src="Resources/assets/images/Fig1.png" alt="Max Temperature Image">
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="humidity.html">
+                  <img class="panel" src="Resources/assets/images/Fig2.png" alt="Humidity Graph">
+                </a>
+              </div>
+            </div>
+
+            <div class="row" style="padding-bottom: 30px;">
+              <div class="col-6">
+                <a href="cloudiness.html">
+                  <img class="panel" src="Resources/assets/images/Fig3.png" alt="Cloudiness Graph">
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="wind_speed.html">
+                  <img class="panel" src="Resources/assets/images/Fig4.png" alt="Wind Speed Graph">
+                </a>
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/data.js') }}"></script>
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer"> Made with <span style="color: #e25555;">&#9829;</span> by Pedro, Shawn, Ahmed</div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DISASTER TWEET OR NOT?</title>
+  <link rel="icon" type="image" href="resources/assets/images/disaster.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!--CSS Link-->
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    
+</head>
+
+<body>
+  <!-- Navigation Section -->
+  <div class="navigation">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" style="background-color: rgb(0, 0, 0);" href="home.html">REAL OR NOT? NLP WITH DISASTER TWEETS</a>     
+      
+      <button class="navbar-toggler  border border-white" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+     
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="data.html">Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href= "exploratory.html">Exploratory Data Analysis</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Scrape Tweet</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href= "code.html">Model & Code</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contributors.html">Contributors</a>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- Content Section -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-18">
+        <!-- Left box  -->
+        <div class="box">
+          <h3 class="title">Data</h3>
+          <hr>
+          The data is consisted of 7613 rows across 4 columns (keyword, location, text, target).
+        </br></br> 
+          <ul>
+            <li>“Keyword” column represents associated word with the text of the tweet.
+            </li>
+            <li>“Location” column represents where the tweet was sent from.
+            </li>
+            <li>“Text” column represents the actual tweet.
+            </li>
+            <li>“Target” represents whether the tweet is associated with a disaster or not.
+            </li>
+          </ul>
+          Keywords only consisted of 221 keywords repeating the association with specific words over many tweets. Location column had a significant amount of missing data, and much of the data describing the same location varied from tweet to tweet. Text column was the full tweet consisting of the body, hashtags, mentions, and links. The target variable was listed as binary, approximately 57% of the tweets are not disasters and 43% are disasters.
+        </br></br> 
+          Please see below the first 100 rows of the data. You can reach the full data on <a href="https://www.kaggle.com/c/nlp-getting-started/data" target=”_blank”>KAGGLE</a>. 
+          <table border="1" class="dataframe">
+            <thead>
+              <tr style="text-align: center;">
+                <th>row no</th>
+                <th>id</th>
+                <th>keyword</th>
+                <th>location</th>
+                <th>text</th>
+                <th>target</th>
+              </tr>
+            </thead>
+          <tbody >
+          <tr >
+          <td >1</td>
+          <td >1</td>
+          <td ></td>
+          <td ></td>
+          <td >Our Deeds are the Reason of this #earthquake May ALLAH Forgive us all</td>
+          <td >1</td>
+          </tr>
+          <tr >
+          <td >2</td>
+          <td >4</td>
+          <td ></td><td ></td><td >Forest fire near La Ronge Sask. Canada</td><td >1</td></tr><tr ><td >3</td><td >5</td><td ></td><td ></td><td >All residents asked to 'shelter in place' are being notified by officers. No other evacuation or shelter in place orders are expected</td><td >1</td></tr><tr ><td >4</td><td >6</td><td ></td><td ></td><td >13,000 people receive #wildfires evacuation orders in California </td><td >1</td></tr><tr ><td >5</td><td >7</td><td ></td><td ></td><td >Just got sent this photo from Ruby #Alaska as smoke from #wildfires pours into a school </td><td >1</td></tr><tr ><td >6</td><td >8</td><td ></td><td ></td><td >#RockyFire Update =&gt; California Hwy. 20 closed in both directions due to Lake County fire - #CAfire #wildfires</td><td >1</td></tr><tr ><td >7</td><td >10</td><td ></td><td ></td><td >#flood #disaster Heavy rain causes flash flooding of streets in Manitou, Colorado Springs areas</td><td >1</td></tr><tr ><td >8</td><td >13</td><td ></td><td ></td><td >I'm on top of the hill and I can see a fire in the woods...</td><td >1</td></tr><tr ><td >9</td><td >14</td><td ></td><td ></td><td >There's an emergency evacuation happening now in the building across the street</td><td >1</td></tr><tr ><td >10</td><td >15</td><td ></td><td ></td><td >I'm afraid that the tornado is coming to our area...</td><td >1</td></tr><tr ><td >11</td><td >16</td><td ></td><td ></td><td >Three people died from the heat wave so far</td><td >1</td></tr><tr ><td >12</td><td >17</td><td ></td><td ></td><td >Haha South Tampa is getting flooded hah- WAIT A SECOND I LIVE IN SOUTH TAMPA WHAT AM I GONNA DO WHAT AM I GONNA DO FVCK #flooding</td><td >1</td></tr><tr ><td >13</td><td >18</td><td ></td><td ></td><td >#raining #flooding #Florida #TampaBay #Tampa 18 or 19 days. I've lost count </td><td >1</td></tr><tr ><td >14</td><td >19</td><td ></td><td ></td><td >#Flood in Bago Myanmar #We arrived Bago</td><td >1</td></tr><tr ><td >15</td><td >20</td><td ></td><td ></td><td >Damage to school bus on 80 in multi car crash #BREAKING </td><td >1</td></tr><tr ><td >16</td><td >23</td><td ></td><td ></td><td >What's up man?</td><td >0</td></tr><tr ><td >17</td><td >24</td><td ></td><td ></td><td >I love fruits</td><td >0</td></tr><tr ><td >18</td><td >25</td><td ></td><td ></td><td >Summer is lovely</td><td >0</td></tr><tr ><td >19</td><td >26</td><td ></td><td ></td><td >My car is so fast</td><td >0</td></tr><tr ><td >20</td><td >28</td><td ></td><td ></td><td >What a goooooooaaaaaal!!!!!!</td><td >0</td></tr><tr ><td >21</td><td >31</td><td ></td><td ></td><td >this is ridiculous....</td><td >0</td></tr><tr ><td >22</td><td >32</td><td ></td><td ></td><td >London is cool ;)</td><td >0</td></tr><tr ><td >23</td><td >33</td><td ></td><td ></td><td >Love skiing</td><td >0</td></tr><tr ><td >24</td><td >34</td><td ></td><td ></td><td >What a wonderful day!</td><td >0</td></tr><tr ><td >25</td><td >36</td><td ></td><td ></td><td >LOOOOOOL</td><td >0</td></tr><tr ><td >26</td><td >37</td><td ></td><td ></td><td >No way...I can't eat that shit</td><td >0</td></tr><tr ><td >27</td><td >38</td><td ></td><td ></td><td >Was in NYC last week!</td><td >0</td></tr><tr ><td >28</td><td >39</td><td ></td><td ></td><td >Love my girlfriend</td><td >0</td></tr><tr ><td >29</td><td >40</td><td ></td><td ></td><td >Cooool :)</td><td >0</td></tr><tr ><td >30</td><td >41</td><td ></td><td ></td><td >Do you like pasta?</td><td >0</td></tr><tr ><td >31</td><td >44</td><td ></td><td ></td><td >The end!</td><td >0</td></tr><tr ><td >32</td><td >48</td><td >ablaze</td><td >Birmingham</td><td >@bbcmtd Wholesale Markets ablaze http://t.co/lHYXEOHY6C</td><td >1</td></tr><tr ><td >33</td><td >49</td><td >ablaze</td><td >Est. September 2012 - Bristol</td><td >We always try to bring the heavy. #metal #RT http://t.co/YAo1e0xngw</td><td >0</td></tr><tr ><td >34</td><td >50</td><td >ablaze</td><td >AFRICA</td><td >#AFRICANBAZE: Breaking news:Nigeria flag set ablaze in Aba. http://t.co/2nndBGwyEi</td><td >1</td></tr><tr ><td >35</td><td >52</td><td >ablaze</td><td >Philadelphia, PA</td><td >Crying out for more! Set me ablaze</td><td >0</td></tr><tr ><td >36</td><td >53</td><td >ablaze</td><td >London, UK</td><td >On plus side LOOK AT THE SKY LAST NIGHT IT WAS ABLAZE http://t.co/qqsmshaJ3N</td><td >0</td></tr><tr ><td >37</td><td >54</td><td >ablaze</td><td >Pretoria</td><td >@PhDSquares #mufc they've built so much hype around new acquisitions but I doubt they will set the EPL ablaze this season.</td><td >0</td></tr><tr ><td >38</td><td >55</td><td >ablaze</td><td >World Wide!!</td><td >INEC Office in Abia Set Ablaze - http://t.co/3ImaomknnA</td><td >1</td></tr><tr ><td >39</td><td >56</td><td >ablaze</td><td ></td><td >Barbados #Bridgetown JAMAICA ÛÒ Two cars set ablaze: SANTA CRUZ ÛÓ Head of the St Elizabeth Police Superintende...  http://t.co/wDUEaj8Q4J</td><td >1</td></tr><tr ><td >40</td><td >57</td><td >ablaze</td><td >Paranaque City</td><td >Ablaze for you Lord :D</td><td >0</td></tr><tr ><td >41</td><td >59</td><td >ablaze</td><td >Live On Webcam</td><td >Check these out: http://t.co/rOI2NSmEJJ http://t.co/3Tj8ZjiN21 http://t.co/YDUiXEfIpE http://t.co/LxTjc87KLS #nsfw</td><td >0</td></tr><tr ><td >42</td><td >61</td><td >ablaze</td><td ></td><td >on the outside you're ablaze and alive
+          but you're dead inside</td><td >0</td></tr><tr ><td >43</td><td >62</td><td >ablaze</td><td >milky way</td><td >Had an awesome time visiting the CFC head office the ancop site and ablaze. Thanks to Tita Vida for taking care of us ??</td><td >0</td></tr><tr ><td >44</td><td >63</td><td >ablaze</td><td ></td><td >SOOOO PUMPED FOR ABLAZE ???? @southridgelife</td><td >0</td></tr><tr ><td >45</td><td >64</td><td >ablaze</td><td ></td><td >I wanted to set Chicago ablaze with my preaching... But not my hotel! http://t.co/o9qknbfOFX</td><td >0</td></tr><tr ><td >46</td><td >65</td><td >ablaze</td><td ></td><td >I gained 3 followers in the last week. You? Know your stats and grow with http://t.co/TIyUliF5c6</td><td >0</td></tr><tr ><td >47</td><td >66</td><td >ablaze</td><td >GREENSBORO,NORTH CAROLINA</td><td >How the West was burned: Thousands of wildfires ablaze in California alone http://t.co/vl5TBR3wbr</td><td >1</td></tr><tr ><td >48</td><td >67</td><td >ablaze</td><td ></td><td >Building the perfect tracklist to life leave the streets ablaze</td><td >0</td></tr><tr ><td >49</td><td >68</td><td >ablaze</td><td >Live On Webcam</td><td >Check these out: http://t.co/rOI2NSmEJJ http://t.co/3Tj8ZjiN21 http://t.co/YDUiXEfIpE http://t.co/LxTjc87KLS #nsfw</td><td >0</td></tr><tr ><td >50</td><td >71</td><td >ablaze</td><td >England.</td><td >First night with retainers in. It's quite weird. Better get used to it; I have to wear them every single night for the next year at least.</td><td >0</td></tr><tr ><td >51</td><td >73</td><td >ablaze</td><td >Sheffield Township, Ohio</td><td >Deputies: Man shot before Brighton home set ablaze http://t.co/gWNRhMSO8k</td><td >1</td></tr><tr ><td >52</td><td >74</td><td >ablaze</td><td >India</td><td >Man wife get six years jail for setting ablaze niece
+          http://t.co/eV1ahOUCZA</td><td >1</td></tr><tr ><td >53</td><td >76</td><td >ablaze</td><td >Barbados</td><td >SANTA CRUZ ÛÓ Head of the St Elizabeth Police Superintendent Lanford Salmon has r ... - http://t.co/vplR5Hka2u http://t.co/SxHW2TNNLf</td><td >0</td></tr><tr ><td >54</td><td >77</td><td >ablaze</td><td >Anaheim</td><td >Police: Arsonist Deliberately Set Black Church In North CarolinaåÊAblaze http://t.co/pcXarbH9An</td><td >1</td></tr><tr ><td >55</td><td >78</td><td >ablaze</td><td >Abuja</td><td >Noches El-Bestia '@Alexis_Sanchez: happy to see my teammates and training hard ?? goodnight gunners.?????? http://t.co/uc4j4jHvGR'</td><td >0</td></tr><tr ><td >56</td><td >79</td><td >ablaze</td><td >USA</td><td >#Kurds trampling on Turkmen flag later set it ablaze while others vandalized offices of Turkmen Front in #Diyala http://t.co/4IzFdYC3cg</td><td >1</td></tr><tr ><td >57</td><td >80</td><td >ablaze</td><td >South Africa</td><td >TRUCK ABLAZE : R21. VOORTREKKER AVE. OUTSIDE OR TAMBO INTL. CARGO SECTION. http://t.co/8kscqKfKkF</td><td >1</td></tr><tr ><td >58</td><td >81</td><td >ablaze</td><td >Sao Paulo, Brazil</td><td >Set our hearts ablaze and every city was a gift And every skyline was like a kiss upon the lips @Û_ https://t.co/cYoMPZ1A0Z</td><td >0</td></tr><tr ><td >59</td><td >82</td><td >ablaze</td><td >hollywoodland </td><td >They sky was ablaze tonight in Los Angeles. I'm expecting IG and FB to be filled with sunset shots if I know my peeps!!</td><td >0</td></tr><tr ><td >60</td><td >83</td><td >ablaze</td><td >Edmonton, Alberta - Treaty 6</td><td >How the West was burned: Thousands of wildfires ablaze in #California alone http://t.co/iCSjGZ9tE1 #climate #energy http://t.co/9FxmN0l0Bd</td><td >1</td></tr><tr ><td >61</td><td >85</td><td >ablaze</td><td ></td><td >Revel in yours wmv videos by means of mac farewell ablaze wmv en route to dvd: GtxRWm</td><td >0</td></tr><tr ><td >62</td><td >86</td><td >ablaze</td><td >Inang Pamantasan</td><td >Progressive greetings!
+          
+          In about a month students would have set their pens ablaze in The Torch Publications'... http://t.co/9FxPiXQuJt</td><td >0</td></tr><tr ><td >63</td><td >89</td><td >ablaze</td><td >Twitter Lockout in progress</td><td >Rene Ablaze &amp;amp; Jacinta - Secret 2k13 (Fallen Skies Edit) - Mar 30 2013  https://t.co/7MLMsUzV1Z</td><td >0</td></tr><tr ><td >64</td><td >91</td><td >ablaze</td><td >Concord, CA</td><td >@Navista7 Steve these fires out here are something else! California is a tinderbox - and this clown was setting my 'hood ablaze @News24680</td><td >1</td></tr><tr ><td >65</td><td >92</td><td >ablaze</td><td >Calgary, AB</td><td >#NowPlaying: Rene Ablaze &amp;amp; Ian Buff - Magnitude http://t.co/Av2JSjfFtc  #EDM</td><td >0</td></tr><tr ><td >66</td><td >93</td><td >ablaze</td><td >Birmingham</td><td >@nxwestmidlands huge fire at Wholesale markets ablaze http://t.co/rwzbFVNXER</td><td >1</td></tr><tr ><td >67</td><td >95</td><td >ablaze</td><td >San Francisco</td><td >@ablaze what time does your talk go until? I don't know if I can make it due to work.</td><td >0</td></tr><tr ><td >68</td><td >96</td><td >accident</td><td >CLVLND</td><td >'I can't have kids cuz I got in a bicycle accident &amp;amp; split my testicles. it's impossible for me to have kids' MICHAEL YOU ARE THE FATHER</td><td >0</td></tr><tr ><td >69</td><td >97</td><td >accident</td><td >Nashville, TN</td><td >Accident on I-24 W #NashvilleTraffic. Traffic moving 8m slower than usual. https://t.co/0GHk693EgJ</td><td >1</td></tr><tr ><td >70</td><td >98</td><td >accident</td><td >Santa Clara, CA</td><td >Accident center lane blocked in #SantaClara on US-101 NB before Great America Pkwy #BayArea #Traffic http://t.co/pmlOhZuRWR</td><td >1</td></tr><tr ><td >71</td><td >100</td><td >accident</td><td >UK</td><td >http://t.co/GKYe6gjTk5 Had a #personalinjury accident this summer? Read our advice &amp;amp; see how a #solicitor can help #OtleyHour</td><td >0</td></tr><tr ><td >72</td><td >102</td><td >accident</td><td >St. Louis, MO</td><td >#stlouis #caraccidentlawyer Speeding Among Top Causes of Teen Accidents https://t.co/k4zoMOF319 https://t.co/S2kXVM0cBA Car Accident teeÛ_</td><td >0</td></tr><tr ><td >73</td><td >104</td><td >accident</td><td >Walker County, Alabama</td><td >Reported motor vehicle accident in Curry on Herman Rd near Stephenson involving an overturned vehicle. Please use... http://t.co/YbJezKuRW1</td><td >1</td></tr><tr ><td >74</td><td >105</td><td >accident</td><td >Australia</td><td >BigRigRadio Live Accident Awareness</td><td >1</td></tr><tr ><td >75</td><td >107</td><td >accident</td><td >North Carolina</td><td >I-77 Mile Marker 31 South Mooresville  Iredell Vehicle Accident Ramp Closed at 8/6 1:18 PM</td><td >1</td></tr><tr ><td >76</td><td >109</td><td >accident</td><td ></td><td >RT @SleepJunkies: Sleeping pills double your risk of a car accident http://t.co/7s9Nm1fiCT</td><td >0</td></tr><tr ><td >77</td><td >110</td><td >accident</td><td >Norf Carolina</td><td >'By accident' they knew what was gon happen https://t.co/Ysxun5vCeh</td><td >0</td></tr><tr ><td >78</td><td >112</td><td >accident</td><td >San Mateo County, CA</td><td >Traffic accident N CABRILLO HWY/MAGELLAN AV MIR (08/06/15 11:03:58)</td><td >1</td></tr><tr ><td >79</td><td >113</td><td >accident</td><td >North Carolina</td><td >I-77 Mile Marker 31 to 40 South Mooresville  Iredell Vehicle Accident Congestion at 8/6 1:18 PM</td><td >1</td></tr><tr ><td >80</td><td >114</td><td >accident</td><td >Njoro, Kenya</td><td >the pastor was not in the scene of the accident......who was the owner of the range rover ?</td><td >1</td></tr><tr ><td >81</td><td >117</td><td >accident</td><td ></td><td >mom: 'we didn't get home as fast as we wished' 
+          me: 'why is that?'
+          mom: 'there was an accident and some truck spilt mayonnaise all over ??????</td><td >0</td></tr><tr ><td >82</td><td >118</td><td >accident</td><td >Your Sister's Bedroom</td><td >I was in a horrible car accident this past Sunday. I'm finally able to get around. Thank you GOD??</td><td >1</td></tr><tr ><td >83</td><td >119</td><td >accident</td><td ></td><td >Can wait to see how pissed Donnie is when I tell him I was in ANOTHER accident??</td><td >0</td></tr><tr ><td >84</td><td >120</td><td >accident</td><td >Arlington, TX</td><td >#TruckCrash Overturns On #FortWorth Interstate http://t.co/Rs22LJ4qFp Click here if you've been in a crash&amp;gt;http://t.co/Ld0unIYw4k</td><td >1</td></tr><tr ><td >85</td><td >121</td><td >accident</td><td >South Bloomfield, OH</td><td >Accident in #Ashville on US 23 SB before SR 752 #traffic http://t.co/hylMo0WgFI</td><td >1</td></tr><tr ><td >86</td><td >126</td><td >accident</td><td ></td><td >Carolina accident: Motorcyclist Dies in I-540 Crash With Car That Crossed Median: A motorcycle rider traveling... http://t.co/p18lzRlmy6</td><td >1</td></tr><tr ><td >87</td><td >128</td><td >accident</td><td >New Hanover County, NC</td><td >FYI CAD:FYI: ;ACCIDENT PROPERTY DAMAGE;NHS;999 PINER RD/HORNDALE DR</td><td >1</td></tr><tr ><td >88</td><td >129</td><td >accident</td><td >Maldives</td><td >RT nAAYf: First accident in years. Turning onto Chandanee Magu from near MMA. Taxi rammed into me while I was halfway turned. Everyone confÛ_</td><td >1</td></tr><tr ><td >89</td><td >130</td><td >accident</td><td >Manchester, NH</td><td >Accident left lane blocked in #Manchester on Rt 293 NB before Eddy Rd stop and go traffic back to NH-3A delay of 4 mins #traffic</td><td >1</td></tr><tr ><td >90</td><td >131</td><td >accident</td><td >Wilmington, NC</td><td >;ACCIDENT PROPERTY DAMAGE; PINER RD/HORNDALE DR</td><td >1</td></tr><tr ><td >91</td><td >132</td><td >accident</td><td ></td><td >???? it was an accident http://t.co/Oia5fxi4gM</td><td >0</td></tr><tr ><td >92</td><td >133</td><td >accident</td><td >New Hanover County, NC</td><td >FYI CAD:FYI: ;ACCIDENT PROPERTY DAMAGE;WPD;1600 S 17TH ST</td><td >1</td></tr><tr ><td >93</td><td >134</td><td >accident</td><td ></td><td >8/6/2015@2:09 PM: TRAFFIC ACCIDENT NO INJURY at 2781 WILLIS FOREMAN RD http://t.co/VCkIT6EDEv</td><td >1</td></tr><tr ><td >94</td><td >135</td><td >accident</td><td >global</td><td >Aashiqui Actress Anu Aggarwal On Her Near-Fatal Accident http://t.co/6Otfp31LqW</td><td >1</td></tr><tr ><td >95</td><td >136</td><td >accident</td><td >Alberta | Sask. | Montana</td><td >Suffield Alberta Accident https://t.co/bPTmlF4P10</td><td >1</td></tr><tr ><td >96</td><td >137</td><td >accident</td><td >Charlotte</td><td >9 Mile backup on I-77 South...accident blocking the Right 2 Lanes at Exit 31 Langtree Rd...consider NC 115 or NC 150 to NC 16 as alternate</td><td >1</td></tr><tr ><td >97</td><td >138</td><td >accident</td><td >Baton Rouge, LA</td><td >Has an accident changed your life? We will help you determine options that can financially support life care plans and on-going treatment.</td><td >0</td></tr><tr ><td >98</td><td >139</td><td >accident</td><td >Hagerstown, MD</td><td >#BREAKING: there was a deadly motorcycle car accident that happened to #Hagerstown today. I'll have more details at 5 @Your4State. #WHAG</td><td >1</td></tr><tr ><td >99</td><td >141</td><td >accident</td><td >Gloucestershire , UK</td><td >@flowri were you marinading it or was it an accident?</td><td >0</td></tr><tr ><td >100</td><td >143</td><td >accident</td><td ></td><td >only had a car for not even a week and got in a fucking car accident .. Mfs can't fucking drive .</td><td >1</td></tr></tbody>
+          
+
+
+          
+           
+        </div>
+      </div>
+      <!-- <div class="col-lg-12 col-md-18">
+         Right Box 
+        <div class="box">
+          <h5 class="title">Visualizations</h5>
+          <hr>
+
+
+          <div class="container">
+            <div class="row" style="padding-bottom: 30px;">
+              <div class="col-6">
+                <a href="max_temperature.html">
+                  <img class="panel" src="Resources/assets/images/Fig1.png" alt="Max Temperature Image">
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="humidity.html">
+                  <img class="panel" src="Resources/assets/images/Fig2.png" alt="Humidity Graph">
+                </a>
+              </div>
+            </div>
+
+            <div class="row" style="padding-bottom: 30px;">
+              <div class="col-6">
+                <a href="cloudiness.html">
+                  <img class="panel" src="Resources/assets/images/Fig3.png" alt="Cloudiness Graph">
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="wind_speed.html">
+                  <img class="panel" src="Resources/assets/images/Fig4.png" alt="Wind Speed Graph">
+                </a>
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/data.js') }}"></script>
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer"> Made with <span style="color: #e25555;">&#9829;</span> by Pedro, Shawn, Ahmed</div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
