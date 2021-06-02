@@ -289,7 +289,7 @@ typed-ast==1.4.0
 ujson==1.35
 unicodecsv==0.14.1
 untokenize==0.1.1
-urllib3==1.25.8
+urllib3==1.26.5
 us==1.0.0
 vcrpy==2.1.0
 vectorize==0.2.0
