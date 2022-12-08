@@ -32,7 +32,7 @@ bs4==0.0.1
 cachetools==4.0.0
 category-encoders==2.1.0
 census==0.8.13
-certifi==2019.11.28
+certifi==2022.12.7
 cffi==1.13.2
 chardet==3.0.4
 citipy==0.0.5
